@@ -5,6 +5,7 @@ import { fileURLToPath, URL } from 'url'
 
 // const host = process.env.TAURI_DEV_HOST
 
+console.log(process.env)
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [vue(), tailwindcss()],
