@@ -5,10 +5,12 @@
         type="text"
         class="font-medium text-sm text-gray-600"
         v-model="board.name"
-        @change="updateBoard(board.id, { name: ($event.target as HTMLInputElement).value })"
+        @change="
+          updateBoard(board.id as number, { name: ($event.target as HTMLInputElement).value })
+        "
       />
 
-      <DeleteButton @click="deleteBoard(board.id)" />
+      <DeleteButton @click="deleteBoard(board.id as number)" />
     </div>
     <div class="p-2 px-3">
       <div class="mt-2">
@@ -55,27 +57,27 @@ const newCard = reactive({
   name: '',
 })
 
-const [board] = defineModel<TablesInsert<'boards'>>('modelValue', {
-  required: true,
-})
+const [board] = defineModel<TablesInsert<'boards'> & { cards: TablesInsert<'cards'>[] }>(
+  'modelValue',
+  {
+    required: true,
+  },
+)
 
 async function add() {
   const card = await createCard({ ...newCard, board_id: board.value.id })
-  board.value.cards.push(card)
+  board.value.cards.push(card as TablesInsert<'cards'>)
   newCard.name = ''
 }
 
 async function remove(id: number) {
-  const card = await deleteCard(id)
+  await deleteCard(id)
   board.value.cards = board.value.cards.filter((c) => c.id != id)
 }
 
-function replace() {}
-function clone(el) {}
-
 async function changeCard(evt) {
   if (!evt.added) return
-  const { element, idx } = evt.added
+  const { element } = evt.added
   console.log(element)
   await updateCard(element.id, { ...element, board_id: board.value.id })
 }
