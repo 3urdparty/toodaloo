@@ -70,7 +70,7 @@ jobs:
           VITE_SUPABASE_PROJECT_URL: ${{ secrets.SUPABASE_PROJECT_URL }}
           VITE_SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
         run: |
-          ${{ steps.detect-package-manager.outputs.runner }} build
+          ${{ steps.detect-package-manager.outputs.runner }} build-only
         working-directory: ${{ env.BUILD_PATH }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
