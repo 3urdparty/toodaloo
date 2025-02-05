@@ -32,7 +32,11 @@ export async function deleteCard(id: number) {
 }
 
 export async function createBoard(newBoard: TablesInsert<'boards'>) {
-  const { data, error } = await supabase.from(`boards`).insert(newBoard).select().single()
+  const { data, error } = await supabase
+    .from(`boards`)
+    .insert(newBoard)
+    .select('*, cards(*)')
+    .single()
   if (error) console.error(error)
   return data
 }

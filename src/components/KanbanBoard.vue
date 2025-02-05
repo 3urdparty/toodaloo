@@ -1,57 +1,69 @@
 <template>
-  <div class="bg-slate-100 border border-slate-200 rounded-sm overflow-clip">
-    <div class="border-b border-slate-200 p-2 px-3 pr-2 bg-slate-50 flex justify-between">
-      <input
-        type="text"
-        class="font-medium text-sm text-gray-600"
-        v-model="board.name"
-        @change="
-          updateBoard(board.id as number, { name: ($event.target as HTMLInputElement).value })
-        "
-      />
+  <Card class="select-none text-neutral-400">
+    <template #header>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <button>
+            <GripVertical class="w-4 text-neutral-500" />
+          </button>
 
-      <DeleteButton @click="deleteBoard(board.id as number)" />
-    </div>
-    <div class="p-2 px-3">
-      <div class="mt-2">
-        <input
-          name="name"
-          id="name"
-          class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-300 sm:text-sm/6"
-          type="text"
-          v-model="newCard.name"
-          @keypress.enter="add"
-        />
+          <button>
+            <ChevronDown class="w-4 text-neutral-500" />
+          </button>
+
+          <input
+            type="text"
+            class="font-medium text-sm text-neutral-200"
+            v-model="board.name"
+            @change="
+              updateBoard(board.id as number, { name: ($event.target as HTMLInputElement).value })
+            "
+          />
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-neutral-400">{{ board.cards.length }}</span>
+          <button>
+            <Ellipsis class="w-4" />
+          </button>
+        </div>
       </div>
-      <draggable
-        class="flex flex-col gap-2 mt-4 mb-2"
-        :list="board.cards"
-        group="cards"
-        @change="changeCard"
-        itemKey="id"
-      >
-        <template #item="{ element, index }">
-          <div
-            class="bg-white rounded p-1.5 px-2 flex gap-2 justify-between border border-slate-200 text-sm items-center"
-            :key="index"
-          >
-            {{ element.name }}
-            <div class="flex items center">
-              <DeleteButton @click="remove(element.id)" />
-            </div>
-          </div>
-        </template>
-      </draggable>
-    </div>
-  </div>
+    </template>
+
+    <template #default>
+      <div>
+        <div class="mt-2">
+          <TextInput v-model="newCard.name" @keypress.enter="add" />
+        </div>
+        <draggable
+          class="flex flex-col gap-2 mt-4 mb-2"
+          :list="board.cards"
+          group="cards"
+          @change="changeCard"
+          itemKey="id"
+        >
+          <template #item="{ element, index }">
+            <Card fit="snug">
+              <p class="text-sm">
+                {{ element.name }}
+              </p>
+            </Card>
+          </template>
+        </draggable>
+      </div>
+    </template>
+  </Card>
 </template>
 <script setup lang="ts">
 import { deleteCard } from '@/cards'
 import { createCard, deleteBoard, updateCard, updateBoard } from '@/cards'
 import DeleteButton from '@/components/DeleteButton.vue'
 import type { TablesInsert } from '@/database.types'
+import { ChevronDown, Ellipsis, GripVertical } from 'lucide-vue-next'
 import { reactive } from 'vue'
 import draggable from 'vuedraggable'
+import Card from './Card.vue'
+import TextInput from './TextInput.vue'
 
 const newCard = reactive({
   name: '',

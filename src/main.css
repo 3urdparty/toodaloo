@@ -1,1 +1,5 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+body {
+  @apply dark:bg-neutral-800 dark:text-neutral-300;
+}

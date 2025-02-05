@@ -1,4 +1,4 @@
-import { Database } from '@/database.types'
+import { type Database } from '@/database.types'
 import { createClient } from '@supabase/supabase-js'
 
 const PROJECT_URL = import.meta.env.VITE_SUPABASE_PROJECT_URL

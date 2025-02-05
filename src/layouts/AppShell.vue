@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-full">
-    <Disclosure as="nav" class="bg-gray-700" v-slot="{ open }">
+    <Disclosure as="nav" class="bg-neutral-700 border-b border-neutral-600" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
@@ -15,8 +15,8 @@
                   :href="item.href"
                   :class="[
                     item.current
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      ? 'bg-neutral-900 text-white'
+                      : 'text-neutral-300 hover:bg-neutral-700 hover:text-white',
                     'rounded-md px-3 py-2 text-sm font-medium',
                   ]"
                   :aria-current="item.current ? 'page' : undefined"
@@ -29,7 +29,7 @@
             <div class="ml-4 flex items-center md:ml-6">
               <button
                 type="button"
-                class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                class="relative rounded-full bg-neutral-800 p-1 text-neutral-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800"
               >
                 <span class="absolute -inset-1.5" />
                 <span class="sr-only">View notifications</span>
@@ -40,7 +40,7 @@
               <Menu as="div" class="relative ml-3">
                 <div>
                   <MenuButton
-                    class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    class="relative flex max-w-xs items-center rounded-full bg-neutral-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800"
                   >
                     <span class="absolute -inset-1.5" />
                     <span class="sr-only">Open user menu</span>
@@ -62,8 +62,8 @@
                       <a
                         :href="item.href"
                         :class="[
-                          active ? 'bg-gray-100 outline-none' : '',
-                          'block px-4 py-2 text-sm text-gray-700',
+                          active ? 'bg-neutral-100 outline-none' : '',
+                          'block px-4 py-2 text-sm text-neutral-700',
                         ]"
                         >{{ item.name }}</a
                       >
@@ -76,7 +76,7 @@
           <div class="-mr-2 flex md:hidden">
             <!-- Mobile menu button -->
             <DisclosureButton
-              class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              class="relative inline-flex items-center justify-center rounded-md bg-neutral-800 p-2 text-neutral-400 hover:bg-neutral-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800"
             >
               <span class="absolute -inset-0.5" />
               <span class="sr-only">Open main menu</span>
@@ -96,26 +96,26 @@
             :href="item.href"
             :class="[
               item.current
-                ? 'bg-gray-900 text-white'
-                : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                ? 'bg-neutral-900 text-white'
+                : 'text-neutral-300 hover:bg-neutral-700 hover:text-white',
               'block rounded-md px-3 py-2 text-base font-medium',
             ]"
             :aria-current="item.current ? 'page' : undefined"
             >{{ item.name }}</DisclosureButton
           >
         </div>
-        <div class="border-t border-gray-700 pb-3 pt-4">
+        <div class="border-t border-neutral-700 pb-3 pt-4">
           <div class="flex items-center px-5">
             <div class="shrink-0">
               <img class="size-10 rounded-full" :src="user.imageUrl" alt="" />
             </div>
             <div class="ml-3">
               <div class="text-base/5 font-medium text-white">{{ user.name }}</div>
-              <div class="text-sm font-medium text-gray-400">{{ user.email }}</div>
+              <div class="text-sm font-medium text-neutral-400">{{ user.email }}</div>
             </div>
             <button
               type="button"
-              class="relative ml-auto shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              class="relative ml-auto shrink-0 rounded-full bg-neutral-800 p-1 text-neutral-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-neutral-800"
             >
               <span class="absolute -inset-1.5" />
               <span class="sr-only">View notifications</span>
@@ -128,7 +128,7 @@
               :key="item.name"
               as="a"
               :href="item.href"
-              class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+              class="block rounded-md px-3 py-2 text-base font-medium text-neutral-400 hover:bg-neutral-700 hover:text-white"
               >{{ item.name }}</DisclosureButton
             >
           </div>
@@ -137,7 +137,7 @@
     </Disclosure>
 
     <main>
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+      <div class="px-4 py-6 sm:px-6 lg:px-8">
         <slot />
       </div>
     </main>
@@ -161,13 +161,7 @@ const user = {
   imageUrl:
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
-const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
-  { name: 'Reports', href: '#', current: false },
-]
+const navigation = [{ name: 'Boards', href: '/', current: true }]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
