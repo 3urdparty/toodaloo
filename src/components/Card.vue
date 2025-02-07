@@ -16,8 +16,9 @@
         'px-3 py-3 sm:px-4': fit == 'default',
         'px-2 py-2 sm:px-3': fit == 'snug',
       }"
+      class="transform transition-[max-height]"
     >
-      <slot />
+      <slot v-if="!expandable || expanded" />
     </div>
     <div class="px-4 py-4 sm:px-6" v-if="$slots.footer">
       <slot name="footer" />
@@ -27,8 +28,12 @@
 <script setup lang="ts">
 interface Props {
   fit?: 'snug' | 'default'
+  expanded: boolean
+  expandable: boolean
 }
 withDefaults(defineProps<Props>(), {
   fit: 'default',
+  expandable: false,
+  expanded: true,
 })
 </script>

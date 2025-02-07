@@ -1,17 +1,25 @@
 <template>
-  <div class="px-8 py-6">
-    <button
-      type="button"
-      class="rounded-md bg-white dark:bg-neutral-700 px-3 py-2 text-sm font-medium text-neutral-900 dark:text-neutral-300 shadow-sm ring-1 ring-inset ring-neutral-300 dark:ring-neutral-600 hover:bg-neutral-50 dark:hover:bg-neutral-600"
-      @click="add"
+  <div class="-mx-4 sm:-mx-6 lg:-mx-8">
+    <div
+      class="fixed left-0 w-screen bottom-0 bg-gradient-to-t from-neutral-800/90 h-20 z-10 flex items-end pointer-events-none"
     >
-      Add Board
-    </button>
-    <div class="flex gap-4 overflow-x-auto snap-x snap-proximity mt-2">
-      <li v-for="(_, idx) in boards" :key="idx" class="snap-center">
-        <KanbanBoard v-model="boards[idx]" class="w-3/3" />
-      </li>
+      <button
+        class="flex items-center gap-2 w-full p-3 py-4 pointer-events-auto"
+        ondrop="console.log('test')"
+      >
+        <Trash class="text-red-400" />
+      </button>
     </div>
+    <div class="px-4 pb-2">
+      <PageHeader>
+        <template #title> Boards </template>
+      </PageHeader>
+    </div>
+    <ul class="flex flex-col sm:flex-row overflow-x-auto snap-x snap-proximity mt-2 px-4">
+      <li v-for="(_, idx) in boards" :key="idx" class="snap-start pl-4">
+        <KanbanBoard v-model="boards[idx]" />
+      </li>
+    </ul>
   </div>
 </template>
 <script setup lang="ts">
@@ -24,6 +32,8 @@ const newBoard = {
 
 import { ref, onMounted } from 'vue'
 import KanbanBoard from '@/components/KanbanBoard.vue'
+import PageHeader from '@/components/PageHeader.vue'
+import { Trash } from 'lucide-vue-next'
 
 const boards = ref([])
 

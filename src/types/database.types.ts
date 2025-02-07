@@ -12,18 +12,21 @@ export type Database = {
       boards: {
         Row: {
           created_at: string
+          expanded: boolean
           id: number
           name: string | null
           owner_id: string
         }
         Insert: {
           created_at?: string
+          expanded?: boolean
           id?: number
           name?: string | null
           owner_id?: string
         }
         Update: {
           created_at?: string
+          expanded?: boolean
           id?: number
           name?: string | null
           owner_id?: string
@@ -36,25 +39,25 @@ export type Database = {
           created_at: string
           id: number
           name: string | null
-          owner_id: string
+          owner_id: string | null
         }
         Insert: {
           board_id?: number | null
           created_at?: string
           id?: number
           name?: string | null
-          owner_id?: string
+          owner_id?: string | null
         }
         Update: {
           board_id?: number | null
           created_at?: string
           id?: number
           name?: string | null
-          owner_id?: string
+          owner_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "card_board_id_fkey"
+            foreignKeyName: "cards_board_id_fkey"
             columns: ["board_id"]
             isOneToOne: false
             referencedRelation: "boards"
