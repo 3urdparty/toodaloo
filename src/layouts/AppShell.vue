@@ -15,7 +15,7 @@
                   :href="item.href"
                   :class="[
                     item.current
-                      ? 'bg-neutral-900 text-white'
+                      ? ' dark:bg-neutral-900 text-white'
                       : 'text-neutral-300 hover:bg-neutral-700 hover:text-white',
                     'rounded-md px-3 py-2 text-sm font-medium',
                   ]"
@@ -138,6 +138,7 @@
 
     <main>
       <div class="px-4 py-6 sm:px-6 lg:px-8">
+        <BreadCrumbs />
         <slot />
       </div>
     </main>
@@ -145,6 +146,7 @@
 </template>
 
 <script setup lang="ts">
+import BreadCrumbs from '@/components/BreadCrumbs.vue'
 import {
   Disclosure,
   DisclosureButton,

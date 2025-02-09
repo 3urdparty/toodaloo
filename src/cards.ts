@@ -2,7 +2,11 @@ import { supabase } from '@/supabase'
 import type { Tables, TablesInsert, TablesUpdate } from './database.types'
 
 export async function getBoards() {
-  const { data, error } = await supabase.from(`boards`).select('*, cards(*)')
+  const { data, error } = await supabase
+    .from(`boards`)
+
+    .select('*, cards(*)')
+    .order('order_index', { ascending: true })
   if (error) console.error(error)
   return data
 }

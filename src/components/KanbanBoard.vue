@@ -3,12 +3,12 @@
     <template #header>
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <button>
+          <button id="handle" class="active:cursor-grabbing hover:cursor-grab">
             <GripVertical class="w-4 text-neutral-500" />
           </button>
 
           <button
-            @click="board.expanded = !board.expanded"
+            @click="expand(board.id as number, !board.expanded)"
             class="hover:text-neutral-400 text-neutral-500 cursor-pointer"
           >
             <ChevronDown
@@ -19,7 +19,7 @@
 
           <input
             type="text"
-            class="font-medium text-sm text-neutral-200"
+            class="font-medium text-sm dark:text-neutral-200 text-neutral-500"
             v-model="board.name"
             @change="
               updateBoard(board.id as number, { name: ($event.target as HTMLInputElement).value })
@@ -29,9 +29,47 @@
 
         <div class="flex items-center gap-2">
           <span class="text-xs text-neutral-400">{{ board.cards.length }}</span>
-          <button @click="remove(board.id as number)">
-            <Ellipsis class="w-4" />
-          </button>
+          <Menu as="div" class="relative inline-block text-left">
+            <div>
+              <MenuButton
+                class="flex items-center rounded-full text-neutral-400 w-4 hover:text-neutral-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-neutral-100"
+              >
+                <span class="sr-only">Open options</span>
+                <Ellipsis class="w-4" />
+              </MenuButton>
+            </div>
+
+            <transition
+              enter-active-class="transition ease-out duration-100"
+              enter-from-class="transform opacity-0 scale-95"
+              enter-to-class="transform opacity-100 scale-100"
+              leave-active-class="transition ease-in duration-75"
+              leave-from-class="transform opacity-100 scale-100"
+              leave-to-class="transform opacity-0 scale-95"
+            >
+              <MenuItems
+                class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+              >
+                <div class="py-1">
+                  <MenuItem v-slot="{ active }">
+                    <button
+                      @click="remove(board.id as number)"
+                      class="w-full text-start text-red-400 flex gap-2 items-center"
+                      :class="[
+                        active
+                          ? 'bg-neutral-100 text-neutral-900 outline-none'
+                          : 'text-neutral-700',
+                        'block px-4 py-2 text-sm',
+                      ]"
+                    >
+                      <TrashIcon class="w-4" />
+                      Delete
+                    </button>
+                  </MenuItem>
+                </div>
+              </MenuItems>
+            </transition>
+          </Menu>
         </div>
       </div>
     </template>
@@ -54,15 +92,8 @@
           @end="handleDrop"
           itemKey="id"
         >
-          <template #item="{ element, index }">
-            <Card fit="snug" :key="index">
-              <div class="flex items-center gap-1">
-                <input type="checkbox" />
-                <p class="text-sm">
-                  {{ element.name }}
-                </p>
-              </div>
-            </Card>
+          <template #item="{ index }">
+            <TaskCard v-model="board.cards[index]" />
           </template>
         </draggable>
       </div>
@@ -70,14 +101,16 @@
   </Card>
 </template>
 <script setup lang="ts">
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { deleteCard } from '@/cards'
 import { createCard, deleteBoard, updateCard, updateBoard } from '@/cards'
 import type { TablesInsert } from '@/types/database.types'
-import { ChevronDown, Ellipsis, GripVertical } from 'lucide-vue-next'
+import { ChevronDown, Ellipsis, GripVertical, TrashIcon } from 'lucide-vue-next'
 import { reactive } from 'vue'
 import draggable from 'vuedraggable'
 import Card from './Card.vue'
 import TextInput from './TextInput.vue'
+import TaskCard from './TaskCard.vue'
 
 const newCard = reactive({
   name: '',
@@ -94,6 +127,11 @@ async function add() {
   const card = await createCard({ ...newCard, board_id: board.value.id })
   board.value.cards.push(card as TablesInsert<'cards'>)
   newCard.name = ''
+}
+
+async function expand(id: number, expanded: boolean) {
+  board.value.expanded = expanded
+  await updateBoard(id as number, { expanded })
 }
 
 async function removeCard(id: number) {

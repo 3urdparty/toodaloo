@@ -1,9 +1,10 @@
 <template>
   <div
-    class="divide-y divide-neutral-200 dark:divide-neutral-600 overflow-hidden rounded-lg bg-white dark:bg-neutral-700/80 border border-neutral-600/80 shadow"
+    class="divide-y divide-neutral-300 text-neutral-500 dark:divide-neutral-600 overflow-hidden rounded-lg bg-neutral-50 dark:bg-neutral-700/80 border border-neutral-300 dark:border-neutral-600/80 dark:shadow shadow-xs"
   >
     <div
       v-if="$slots.header"
+      class="bg-white"
       :class="{
         'px-3 py-3 sm:px-4': fit == 'default',
         'px-2 py-3 sm:px-2': fit == 'snug',
