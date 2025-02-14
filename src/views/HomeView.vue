@@ -9,21 +9,19 @@
       </PageHeader>
     </div>
 
-    <ul class="flex flex-col sm:flex-row overflow-x-auto scrollbar-none snap-x snap-proximity px-8">
-      <Draggable
-        class="flex gap-4"
-        :list="boards"
-        group="boards"
-        @start="console.log"
-        @change="change"
-        itemKey="id"
-        handle="#handle"
-      >
-        <template #item="{ index }">
-          <KanbanBoard v-model="boards[index]" class="w-[25rem] h-fit" />
-        </template>
-      </Draggable>
-    </ul>
+    <Draggable
+      class="flex flex-col sm:flex-row overflow-x-auto scrollbar-none snap-x snap-proximity px-8 gap-5 scroll-px-5"
+      :list="boards"
+      group="boards"
+      @start="console.log"
+      @change="change"
+      itemKey="id"
+      handle="#handle"
+    >
+      <template #item="{ index }">
+        <KanbanBoard v-model="boards[index]" class="min-w-1/3 lg:min-w-1/4 h-fit snap-start" />
+      </template>
+    </Draggable>
   </div>
 </template>
 <script setup lang="ts">
@@ -41,6 +39,8 @@ import PageHeader from '@/components/PageHeader.vue'
 import Button from '@/components/Button.vue'
 import { updateBoard } from './../cards.ts'
 import { supabase } from '@/supabase'
+import MarkedInput from '@/components/MarkedInput.vue'
+import Card from '@/components/Card.vue'
 
 const boards = ref([])
 

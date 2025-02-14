@@ -1,9 +1,6 @@
 @import 'tailwindcss';
 @plugin 'tailwind-scrollbar';
 
-@theme {
-}
-
 body {
   @apply dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300;
 }

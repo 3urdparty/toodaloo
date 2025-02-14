@@ -1,5 +1,5 @@
 <template>
-  <Card fit="snug">
+  <Card fit="snug" class="bg-black">
     <div class="flex items-center gap-2 min-h-5">
       <input
         type="checkbox"

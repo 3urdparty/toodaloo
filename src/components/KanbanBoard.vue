@@ -1,5 +1,5 @@
 <template>
-  <Card class="select-none text-neutral-400" :expanded="board.expanded" expandable>
+  <Card class="text-neutral-400" :expanded="board.expanded" expandable>
     <template #header>
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -88,12 +88,19 @@
           :list="board.cards"
           group="cards"
           @change="changeCard"
-          @start="console.log"
-          @end="handleDrop"
           itemKey="id"
         >
-          <template #item="{ index }">
-            <TaskCard v-model="board.cards[index]" />
+          <template #item="{ element, index }">
+            <TaskCard
+              v-model="board.cards[index]"
+              @dragstart="
+                (event: DragEvent) => {
+                  event.dataTransfer.setData('application/my-app', JSON.stringify(element))
+                  event.dataTransfer.effectAllowed = 'move'
+                }
+              "
+              aria-dropeffect="move"
+            />
           </template>
         </draggable>
       </div>
@@ -105,7 +112,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { deleteCard } from '@/cards'
 import { createCard, deleteBoard, updateCard, updateBoard } from '@/cards'
 import type { TablesInsert } from '@/types/database.types'
-import { ChevronDown, Ellipsis, GripVertical, TrashIcon } from 'lucide-vue-next'
+import { ChevronDown, Ellipsis, GripVertical, Trash, TrashIcon } from 'lucide-vue-next'
 import { reactive } from 'vue'
 import draggable from 'vuedraggable'
 import Card from './Card.vue'
@@ -150,9 +157,5 @@ async function changeCard(evt, og) {
   if (!evt.added) return
   const { element } = evt.added
   await updateCard(element.id, { ...element, board_id: board.value.id })
-}
-
-function handleDrop(evt) {
-  console.log(evt)
 }
 </script>
