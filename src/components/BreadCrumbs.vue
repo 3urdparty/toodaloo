@@ -2,7 +2,7 @@
   <nav class="flex" aria-label="Breadcrumb">
     <ol
       role="list"
-      class="flex space-x-4 rounded-md bg-white dark:bg-neutral-700 px-6 shadow border border-neutral-300 dark:border-neutral-600"
+      class="flex space-x-4 rounded-md bg-white dark:bg-neutral-700 px-6 shadow-sm border border-neutral-300 dark:border-neutral-600"
     >
       <li class="flex">
         <div class="flex items-center">

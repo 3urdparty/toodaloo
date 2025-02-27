@@ -4,7 +4,7 @@
   >
     <div
       v-if="$slots.header"
-      class="bg-white dark:bg-neutral-700"
+      class="bg-white dark:bg-neutral-400"
       :class="{
         'px-3 py-3 sm:px-4': fit == 'default',
         'px-2 py-3 sm:px-2': fit == 'snug',

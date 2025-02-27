@@ -1,16 +1,9 @@
 <template>
   <div class="-mx-4 sm:-mx-6 lg:-mx-8">
-    <div class="px-8">
-      <PageHeader>
-        <template #right>
-          <Button @click="add()"> Create </Button>
-        </template>
-        <template #title> Boards </template>
-      </PageHeader>
-    </div>
     <div
       class="fixed bottom-0 w-full h-15 bg-gradient-to-t from-neutral-900/60 to-transparent z-100"
     >
+      <Button @click="add()"> Create </Button>
       <div
         @dragover.prevent="(event: DragEvent) => (event.dataTransfer.dropEffect = 'move')"
         @drop.prevent="
@@ -25,19 +18,21 @@
       </div>
     </div>
 
-    <Draggable
-      class="flex flex-col sm:flex-row overflow-x-auto scrollbar-none snap-x snap-proximity px-8 gap-5 scroll-px-5"
-      :list="boards"
-      group="boards"
-      @start="console.log"
-      @change="change"
-      itemKey="id"
-      handle="#handle"
-    >
-      <template #item="{ index }">
-        <KanbanBoard v-model="boards[index]" class="min-w-1/3 lg:min-w-1/4 h-fit snap-start" />
-      </template>
-    </Draggable>
+    <div class="mt-4">
+      <Draggable
+        class="flex flex-col sm:flex-row overflow-x-auto scrollbar-none snap-x snap-proximity gap-5 scroll-px-5"
+        :list="boards"
+        group="boards"
+        @start="console.log"
+        @change="change"
+        itemKey="id"
+        handle="#handle"
+      >
+        <template #item="{ index }">
+          <KanbanBoard v-model="boards[index]" class="min-w-3/5 lg:min-w-1/3 h-fit snap-start" />
+        </template>
+      </Draggable>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
