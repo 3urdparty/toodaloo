@@ -2,11 +2,11 @@
   <nav class="flex" aria-label="Breadcrumb">
     <ol
       role="list"
-      class="flex space-x-4 rounded-md bg-white px-6 shadow border border-neutral-300"
+      class="flex space-x-4 rounded-md bg-white dark:bg-neutral-700 px-6 shadow border border-neutral-300 dark:border-neutral-600"
     >
       <li class="flex">
         <div class="flex items-center">
-          <a href="#" class="text-gray-400 hover:text-gray-500">
+          <a href="#" class="dark:text-neutral-400 hover:text-gray-500">
             <House class="size-5 shrink-0" aria-hidden="true" />
             <span class="sr-only">Home</span>
           </a>

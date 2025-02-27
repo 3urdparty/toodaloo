@@ -1,6 +1,6 @@
 <template>
   <Card fit="snug" class="bg-black">
-    <div class="flex items-center gap-2 min-h-5">
+    <div class="flex items-center gap-2 min-h-5 text-neutral-300">
       <input
         type="checkbox"
         class="bg-black"

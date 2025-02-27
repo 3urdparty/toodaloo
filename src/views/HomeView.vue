@@ -8,6 +8,22 @@
         <template #title> Boards </template>
       </PageHeader>
     </div>
+    <div
+      class="fixed bottom-0 w-full h-15 bg-gradient-to-t from-neutral-900/60 to-transparent z-100"
+    >
+      <div
+        @dragover.prevent="(event: DragEvent) => (event.dataTransfer.dropEffect = 'move')"
+        @drop.prevent="
+          (event: DragEvent) => {
+            const card = JSON.parse(event.dataTransfer.getData('application/my-app'))
+            removeCard(card.board_id, card.id)
+          }
+        "
+        class="text-red-400 p-4 hover:text-red-300"
+      >
+        <Trash />
+      </div>
+    </div>
 
     <Draggable
       class="flex flex-col sm:flex-row overflow-x-auto scrollbar-none snap-x snap-proximity px-8 gap-5 scroll-px-5"
@@ -26,7 +42,7 @@
 </template>
 <script setup lang="ts">
 import Draggable from 'vuedraggable'
-import { getBoards, createBoard } from './../cards.ts'
+import { getBoards, createBoard, deleteCard } from './../cards.ts'
 
 const newBoard = {
   name: 'Board',
@@ -37,10 +53,17 @@ import { ref, onMounted } from 'vue'
 import KanbanBoard from '@/components/KanbanBoard.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import Button from '@/components/Button.vue'
-import { updateBoard } from './../cards.ts'
+
 import { supabase } from '@/supabase'
-import MarkedInput from '@/components/MarkedInput.vue'
-import Card from '@/components/Card.vue'
+
+async function removeCard(boardId: number, id: number) {
+  await deleteCard(id)
+  console.log(id)
+  const boardIdx = boards.value.findIndex((b) => b.id == boardId)
+  boards.value[boardIdx].cards = boards.value[boardIdx].cards.filter((c) => c.id !== id)
+}
+
+import { Trash } from 'lucide-vue-next'
 
 const boards = ref([])
 
